@@ -23,6 +23,9 @@
     UILabel *_cityTemptLabel;
     UILabel *_weatherInfoLabel;
     UILabel *_lowHighLabel;
+    //时间信息
+    NSArray *_arrWeek;
+    NSDateComponents *_dateComponent;
 }
 
 @end
@@ -44,6 +47,7 @@
 #pragma mark --UI
 - (void)uiInit
 {
+    _arrWeek =[NSArray arrayWithObjects:@"星期六",@"星期日",@"星期一",@"星期二",@"星期三",@"星期四",@"星期五", nil];
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.view.backgroundColor = [UIColor whiteColor];
     
@@ -70,7 +74,12 @@
     _cityTemptLabel = [MyUtil createLabelFrame:CGRectMake(0, _weatherInfoLabel.frame.origin.y + 15 + 5, kScreenWidth, 80) text:@"10°" font:[UIFont systemFontOfSize:80] textAlignment:NSTextAlignmentCenter];
     [_cityView addSubview:_cityTemptLabel];
    //今天信息
-    UILabel *today = [MyUtil createLabelFrame:CGRectMake(20, _cityView.frame.size.height-70,100 , 70) text:@"星期二  今天" font:[UIFont systemFontOfSize:15] textAlignment:NSTextAlignmentLeft];
+    NSDate *now = [NSDate date];
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSUInteger unitFlags = NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitWeekday;
+    _dateComponent = [calendar components:unitFlags fromDate:now];
+
+    UILabel *today = [MyUtil createLabelFrame:CGRectMake(20, _cityView.frame.size.height-70,100 , 70) text:[NSString stringWithFormat:@"%@  今天",[_arrWeek objectAtIndex:[_dateComponent weekday]]] font:[UIFont systemFontOfSize:15] textAlignment:NSTextAlignmentLeft];
     [_cityView addSubview:today];
     //最高最低温度
     _lowHighLabel = [MyUtil createLabelFrame:CGRectMake(kScreenWidth-20-100, _cityView.frame.size.height-70, 100, 70) text:@"31   18" font:[UIFont systemFontOfSize:15] textAlignment:NSTextAlignmentRight];
