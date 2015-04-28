@@ -31,7 +31,7 @@
         _cityName = [[UILabel alloc]initWithFrame:CGRectMake(20, 30, 200, 30)];
         _cityName.font = [UIFont systemFontOfSize:20];
         //温度
-        _tempLabel = [[UILabel alloc]initWithFrame:CGRectMake(kScreenWidth-70, 10, 60, 60)];
+        _tempLabel = [[UILabel alloc]initWithFrame:CGRectMake(kScreenWidth-80, 10, 70, 60)];
         _tempLabel.font = [UIFont systemFontOfSize:30];
         
         [self.contentView addSubview:_timeLabel];

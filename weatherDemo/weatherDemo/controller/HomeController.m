@@ -9,7 +9,7 @@
 #import "HomeController.h"
 #import "CityViewController.h"
 
-@interface HomeController ()<UITableViewDataSource,UITableViewDelegate>
+@interface HomeController ()<UITableViewDataSource,UITableViewDelegate,CityViewControllerDelegate>
 {
     UITableView *_tabView;
     UIView *_footView;
@@ -17,6 +17,12 @@
     UIPageControl *_pageCtrl;
     NSMutableArray *_dataArray;
     
+    //城市信息
+    UIView *_cityView;
+    UILabel *_cityNameLabel;
+    UILabel *_cityTemptLabel;
+    UILabel *_weatherInfoLabel;
+    UILabel *_lowHighLabel;
 }
 
 @end
@@ -42,6 +48,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
     
     [self createScrollView];
+    [self createCityView];
     [self createTabView];
     [self createFootView];
     
@@ -49,9 +56,32 @@
     
 }
 
+- (void)createCityView
+{
+    _cityView = [[UIView alloc]initWithFrame:CGRectMake(0, 20, kScreenWidth, self.view.center.y-40)];
+    _cityView.backgroundColor = [UIColor grayColor];
+    //城市名
+    _cityNameLabel = [MyUtil createLabelFrame:CGRectMake(0, 30, kScreenWidth, 30) text:@"上海直辖市" font:[UIFont systemFontOfSize:20] textAlignment:NSTextAlignmentCenter];
+    [_cityView addSubview:_cityNameLabel];
+    //当前天气信息
+    _weatherInfoLabel = [MyUtil createLabelFrame:CGRectMake(0, 60, kScreenWidth, 15) text:@"晴间多云" font:[UIFont systemFontOfSize:15] textAlignment:NSTextAlignmentCenter];
+    [_cityView addSubview:_weatherInfoLabel];
+    //温度
+    _cityTemptLabel = [MyUtil createLabelFrame:CGRectMake(0, _weatherInfoLabel.frame.origin.y + 15 + 5, kScreenWidth, 80) text:@"10°" font:[UIFont systemFontOfSize:80] textAlignment:NSTextAlignmentCenter];
+    [_cityView addSubview:_cityTemptLabel];
+   //今天信息
+    UILabel *today = [MyUtil createLabelFrame:CGRectMake(20, _cityView.frame.size.height-70,100 , 70) text:@"星期二  今天" font:[UIFont systemFontOfSize:15] textAlignment:NSTextAlignmentLeft];
+    [_cityView addSubview:today];
+    //最高最低温度
+    _lowHighLabel = [MyUtil createLabelFrame:CGRectMake(kScreenWidth-20-100, _cityView.frame.size.height-70, 100, 70) text:@"31   18" font:[UIFont systemFontOfSize:15] textAlignment:NSTextAlignmentRight];
+    [_cityView addSubview:_lowHighLabel];
+    
+    [_mainScroll addSubview:_cityView];
+}
+
 - (void)createTabView
 {
-    _tabView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight-44) style:UITableViewStylePlain];
+    _tabView = [[UITableView alloc]initWithFrame:CGRectMake(0, _cityView.frame.size.height, kScreenWidth, kScreenHeight-44) style:UITableViewStylePlain];
     _tabView.delegate = self;
     _tabView.dataSource = self;
     [_mainScroll addSubview:_tabView];
@@ -130,6 +160,7 @@
 - (void)addCity
 {
     CityViewController *cityCtrl = [[CityViewController alloc]init];
+    cityCtrl.delegate = self;
     [self presentViewController:cityCtrl animated:NO completion:nil];
 }
 
@@ -142,6 +173,15 @@
 {
     NSLog(@"right");
 }
+
+#pragma mark --添加城市返回的代理
+- (void)didSelectedWithCityInfo:(NSDictionary *)cityDic
+{
+    _cityNameLabel.text = cityDic[kCityName];
+    _cityTemptLabel.text = [NSString stringWithFormat:@"%@°",cityDic[kTemp]];
+}
+
+
 
 @end
 

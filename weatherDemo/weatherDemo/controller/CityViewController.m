@@ -104,7 +104,7 @@
     _leftBtn.contentHorizontalAlignment= UIControlContentHorizontalAlignmentLeft;
     
     _rightBtn = [UIButton buttonWithType:UIButtonTypeContactAdd];
-    _rightBtn.frame = CGRectMake(kScreenWidth-70, 0, 100, 50);
+    _rightBtn.frame = CGRectMake(kScreenWidth-70, 0, 70, 50);
     [_rightBtn addTarget:self action:@selector(addCity:) forControlEvents:UIControlEventTouchUpInside];
     
 }
@@ -117,7 +117,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == 2 )
+    if (indexPath.row == _dataArray.count )
     {
         static NSString *footCell = @"footId";
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:footCell];
@@ -128,7 +128,7 @@
         
         [cell.contentView addSubview:_leftBtn];
         [cell.contentView addSubview:_rightBtn];
-        
+        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
         return cell;
     }
     else
@@ -152,7 +152,7 @@
         {
             cell.timeLabel.text = [NSString stringWithFormat:@"下午%ld:%ld",[_dateComponent hour]-12,[_dateComponent minute]];
         }
-        
+        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
         return cell;
     }
 }
@@ -161,6 +161,11 @@
 {
     if (indexPath.row != _dataArray.count)
     {
+        if (self.delegate)
+        {
+            NSDictionary *dic = _dataArray[indexPath.row];
+            [self.delegate didSelectedWithCityInfo:dic];
+        }
         [self dismissViewControllerAnimated:NO completion:^{
             
         }];
@@ -181,7 +186,7 @@
 // 删除
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == _dataArray.count)
+    if (indexPath.row == _dataArray.count || indexPath.row == 0)
     {
         return NO;
     }
@@ -192,17 +197,21 @@
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
     
-        NSMutableArray *subArray = _dataArray[indexPath.section];
-        
-        [subArray removeObjectAtIndex:indexPath.row];
-        //[tableView reloadData];
+      [_dataArray removeObjectAtIndex:indexPath.row];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        [_dataArray writeToFile:_path atomically:YES];
     }
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return @"删除";
+}
+
+-(UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    return UITableViewCellEditingStyleDelete;
 }
 
 #pragma mark --lifeCycle
@@ -234,8 +243,6 @@
             int fTemp = temp.intValue*2+32;
             NSString *f = [NSString stringWithFormat:@"%d",fTemp];
             [dic setObject:f forKey:kTemp];
-            
-            [_dataArray writeToFile:_path atomically:YES];
         }
         [_cityTab reloadData];
         _isF = YES;
@@ -249,8 +256,6 @@
             int cTemp = ((temp.intValue - 32)/2);
             NSString *c = [NSString stringWithFormat:@"%d",cTemp];
             [dic setObject:c forKey:kTemp];
-            
-            [_dataArray writeToFile:_path atomically:YES];
         }
         [_cityTab reloadData];
         _isF = NO;
@@ -262,10 +267,16 @@
 
 - (void)addCity:(UIButton *)btn
 {
+     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    [dic setValue:@"SH" forKey:kCityName];
+    [dic setValue:@"35" forKey:kTemp];
+    [_dataArray addObject:dic];
+    [_dataArray writeToFile:_path atomically:YES];
     SearchCityController *searchCtrl = [[SearchCityController alloc]init];
     [self presentViewController:searchCtrl animated:YES completion:^{
         
     }];
+    
 }
 
 @end

@@ -11,4 +11,5 @@
 @interface MyUtil : NSObject
 + (UIButton *)createBtnFrame:(CGRect)frame title:(NSString *)title bgImage:(NSString *)bgImageName image:(NSString *)imageName target:(id)target action:(SEL)action;
 
++(UILabel *)createLabelFrame:(CGRect)frame text:(NSString *)text font:(UIFont *)font textAlignment:(NSTextAlignment)textAlignment;
 @end

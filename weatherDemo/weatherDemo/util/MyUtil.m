@@ -35,4 +35,25 @@
     return btn;
 }
 
++(UILabel *)createLabelFrame:(CGRect)frame text:(NSString *)text font:(UIFont *)font textAlignment:(NSTextAlignment)textAlignment
+{
+    UILabel *label = [[UILabel alloc]initWithFrame:frame];
+    if (text)
+    {
+        label.text = text;
+    }
+    if (font)
+    {
+        label.font = font;
+    }
+    
+    if (textAlignment)
+    {
+        label.textAlignment = textAlignment;
+    }
+    
+    return label;
+}
+
+
 @end
