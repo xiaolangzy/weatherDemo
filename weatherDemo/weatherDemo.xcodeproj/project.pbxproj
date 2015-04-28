@@ -17,6 +17,9 @@
 		D21084D71AEE37EB00F49D57 /* HomeController.m in Sources */ = {isa = PBXBuildFile; fileRef = D21084D61AEE37EB00F49D57 /* HomeController.m */; };
 		D21084DB1AEE3B7800F49D57 /* MyUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = D21084DA1AEE3B7800F49D57 /* MyUtil.m */; };
 		D21084DE1AEE50FC00F49D57 /* CityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D21084DD1AEE50FC00F49D57 /* CityViewController.m */; };
+		D21084E71AEF54D900F49D57 /* CityInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D21084E61AEF54D900F49D57 /* CityInfoModel.m */; };
+		D21084EA1AEF54EE00F49D57 /* CityInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = D21084E91AEF54EE00F49D57 /* CityInfo.m */; };
+		D210851F1AEF711000F49D57 /* SearchCityController.m in Sources */ = {isa = PBXBuildFile; fileRef = D210851E1AEF711000F49D57 /* SearchCityController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +53,12 @@
 		D21084DA1AEE3B7800F49D57 /* MyUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyUtil.m; sourceTree = "<group>"; };
 		D21084DC1AEE50FC00F49D57 /* CityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CityViewController.h; sourceTree = "<group>"; };
 		D21084DD1AEE50FC00F49D57 /* CityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CityViewController.m; sourceTree = "<group>"; };
+		D21084E51AEF54D900F49D57 /* CityInfoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CityInfoModel.h; sourceTree = "<group>"; };
+		D21084E61AEF54D900F49D57 /* CityInfoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CityInfoModel.m; sourceTree = "<group>"; };
+		D21084E81AEF54EE00F49D57 /* CityInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CityInfo.h; sourceTree = "<group>"; };
+		D21084E91AEF54EE00F49D57 /* CityInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CityInfo.m; sourceTree = "<group>"; };
+		D210851D1AEF711000F49D57 /* SearchCityController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchCityController.h; sourceTree = "<group>"; };
+		D210851E1AEF711000F49D57 /* SearchCityController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchCityController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,11 +82,11 @@
 		D210849E1AEE2D8300F49D57 = {
 			isa = PBXGroup;
 			children = (
-				D21084D81AEE3B5900F49D57 /* util */,
 				D21084D01AEE2EA800F49D57 /* controller */,
 				D21084D11AEE2EA800F49D57 /* model */,
-				D21084D21AEE2EA800F49D57 /* thirdParty */,
 				D21084D31AEE2EA800F49D57 /* view */,
+				D21084D81AEE3B5900F49D57 /* util */,
+				D21084D21AEE2EA800F49D57 /* thirdParty */,
 				D21084A91AEE2D8300F49D57 /* weatherDemo */,
 				D21084C31AEE2D8300F49D57 /* weatherDemoTests */,
 				D21084A81AEE2D8300F49D57 /* Products */,
@@ -141,6 +150,8 @@
 				D21084D61AEE37EB00F49D57 /* HomeController.m */,
 				D21084DC1AEE50FC00F49D57 /* CityViewController.h */,
 				D21084DD1AEE50FC00F49D57 /* CityViewController.m */,
+				D210851D1AEF711000F49D57 /* SearchCityController.h */,
+				D210851E1AEF711000F49D57 /* SearchCityController.m */,
 			);
 			name = controller;
 			path = weatherDemo/controller;
@@ -149,6 +160,8 @@
 		D21084D11AEE2EA800F49D57 /* model */ = {
 			isa = PBXGroup;
 			children = (
+				D21084E51AEF54D900F49D57 /* CityInfoModel.h */,
+				D21084E61AEF54D900F49D57 /* CityInfoModel.m */,
 			);
 			name = model;
 			path = weatherDemo/model;
@@ -166,6 +179,8 @@
 		D21084D31AEE2EA800F49D57 /* view */ = {
 			isa = PBXGroup;
 			children = (
+				D21084E81AEF54EE00F49D57 /* CityInfo.h */,
+				D21084E91AEF54EE00F49D57 /* CityInfo.m */,
 			);
 			name = view;
 			path = weatherDemo/view;
@@ -283,10 +298,13 @@
 			files = (
 				D21084DB1AEE3B7800F49D57 /* MyUtil.m in Sources */,
 				D21084D71AEE37EB00F49D57 /* HomeController.m in Sources */,
+				D21084EA1AEF54EE00F49D57 /* CityInfo.m in Sources */,
+				D21084E71AEF54D900F49D57 /* CityInfoModel.m in Sources */,
 				D21084B31AEE2D8300F49D57 /* ViewController.m in Sources */,
 				D21084DE1AEE50FC00F49D57 /* CityViewController.m in Sources */,
 				D21084B01AEE2D8300F49D57 /* AppDelegate.m in Sources */,
 				D21084AD1AEE2D8300F49D57 /* main.m in Sources */,
+				D210851F1AEF711000F49D57 /* SearchCityController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -487,6 +505,7 @@
 				D21084CC1AEE2D8300F49D57 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D21084CD1AEE2D8300F49D57 /* Build configuration list for PBXNativeTarget "weatherDemoTests" */ = {
 			isa = XCConfigurationList;
@@ -495,6 +514,7 @@
 				D21084CF1AEE2D8300F49D57 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -12,6 +12,9 @@
 #define kScreenWidth  [[UIScreen mainScreen] bounds].size.width
 #define kScreenHeight  [[UIScreen mainScreen] bounds].size.height
 
+#define kCityName (@"cityName")
+#define kTemp   (@"temp")
+
 #import <UIKit/UIKit.h>
 #import "MyUtil.h"
 // Include any system framework and library headers here that should be included in all compilation units.

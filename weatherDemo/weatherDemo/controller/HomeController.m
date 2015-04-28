@@ -38,6 +38,7 @@
 #pragma mark --UI
 - (void)uiInit
 {
+    self.automaticallyAdjustsScrollViewInsets = NO;
     self.view.backgroundColor = [UIColor whiteColor];
     
     [self createScrollView];
