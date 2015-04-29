@@ -20,6 +20,11 @@
 		D21084E71AEF54D900F49D57 /* CityInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D21084E61AEF54D900F49D57 /* CityInfoModel.m */; };
 		D21084EA1AEF54EE00F49D57 /* CityInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = D21084E91AEF54EE00F49D57 /* CityInfo.m */; };
 		D210851F1AEF711000F49D57 /* SearchCityController.m in Sources */ = {isa = PBXBuildFile; fileRef = D210851E1AEF711000F49D57 /* SearchCityController.m */; };
+		D21085221AF0743700F49D57 /* ForecastScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = D21085211AF0743700F49D57 /* ForecastScrollView.m */; };
+		D21085251AF0A50C00F49D57 /* WeekCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D21085241AF0A50C00F49D57 /* WeekCell.m */; };
+		D21085281AF0B5DC00F49D57 /* TodayInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D21085271AF0B5DC00F49D57 /* TodayInfoCell.m */; };
+		D210852B1AF0BAA600F49D57 /* TodayDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D210852A1AF0BAA600F49D57 /* TodayDetailCell.m */; };
+		D210852E1AF0CCB900F49D57 /* MainView.m in Sources */ = {isa = PBXBuildFile; fileRef = D210852D1AF0CCB900F49D57 /* MainView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +64,16 @@
 		D21084E91AEF54EE00F49D57 /* CityInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CityInfo.m; sourceTree = "<group>"; };
 		D210851D1AEF711000F49D57 /* SearchCityController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchCityController.h; sourceTree = "<group>"; };
 		D210851E1AEF711000F49D57 /* SearchCityController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchCityController.m; sourceTree = "<group>"; };
+		D21085201AF0743700F49D57 /* ForecastScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForecastScrollView.h; sourceTree = "<group>"; };
+		D21085211AF0743700F49D57 /* ForecastScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForecastScrollView.m; sourceTree = "<group>"; };
+		D21085231AF0A50C00F49D57 /* WeekCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeekCell.h; sourceTree = "<group>"; };
+		D21085241AF0A50C00F49D57 /* WeekCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeekCell.m; sourceTree = "<group>"; };
+		D21085261AF0B5DC00F49D57 /* TodayInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TodayInfoCell.h; sourceTree = "<group>"; };
+		D21085271AF0B5DC00F49D57 /* TodayInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TodayInfoCell.m; sourceTree = "<group>"; };
+		D21085291AF0BAA600F49D57 /* TodayDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TodayDetailCell.h; sourceTree = "<group>"; };
+		D210852A1AF0BAA600F49D57 /* TodayDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TodayDetailCell.m; sourceTree = "<group>"; };
+		D210852C1AF0CCB900F49D57 /* MainView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainView.h; sourceTree = "<group>"; };
+		D210852D1AF0CCB900F49D57 /* MainView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -179,8 +194,18 @@
 		D21084D31AEE2EA800F49D57 /* view */ = {
 			isa = PBXGroup;
 			children = (
+				D210852C1AF0CCB900F49D57 /* MainView.h */,
+				D210852D1AF0CCB900F49D57 /* MainView.m */,
 				D21084E81AEF54EE00F49D57 /* CityInfo.h */,
 				D21084E91AEF54EE00F49D57 /* CityInfo.m */,
+				D21085201AF0743700F49D57 /* ForecastScrollView.h */,
+				D21085211AF0743700F49D57 /* ForecastScrollView.m */,
+				D21085231AF0A50C00F49D57 /* WeekCell.h */,
+				D21085241AF0A50C00F49D57 /* WeekCell.m */,
+				D21085261AF0B5DC00F49D57 /* TodayInfoCell.h */,
+				D21085271AF0B5DC00F49D57 /* TodayInfoCell.m */,
+				D21085291AF0BAA600F49D57 /* TodayDetailCell.h */,
+				D210852A1AF0BAA600F49D57 /* TodayDetailCell.m */,
 			);
 			name = view;
 			path = weatherDemo/view;
@@ -300,11 +325,16 @@
 				D21084D71AEE37EB00F49D57 /* HomeController.m in Sources */,
 				D21084EA1AEF54EE00F49D57 /* CityInfo.m in Sources */,
 				D21084E71AEF54D900F49D57 /* CityInfoModel.m in Sources */,
+				D21085221AF0743700F49D57 /* ForecastScrollView.m in Sources */,
 				D21084B31AEE2D8300F49D57 /* ViewController.m in Sources */,
 				D21084DE1AEE50FC00F49D57 /* CityViewController.m in Sources */,
+				D21085281AF0B5DC00F49D57 /* TodayInfoCell.m in Sources */,
 				D21084B01AEE2D8300F49D57 /* AppDelegate.m in Sources */,
+				D210852E1AF0CCB900F49D57 /* MainView.m in Sources */,
 				D21084AD1AEE2D8300F49D57 /* main.m in Sources */,
+				D21085251AF0A50C00F49D57 /* WeekCell.m in Sources */,
 				D210851F1AEF711000F49D57 /* SearchCityController.m in Sources */,
+				D210852B1AF0BAA600F49D57 /* TodayDetailCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -435,6 +465,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = weatherDemo/thirdParty/Header.pch;
 				INFOPLIST_FILE = weatherDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -447,6 +478,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = weatherDemo/thirdParty/Header.pch;
 				INFOPLIST_FILE = weatherDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

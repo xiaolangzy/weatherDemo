@@ -26,7 +26,7 @@
     //文件路径
     NSString *_path;
     //判断是否为°F
-    BOOL _isF;
+    NSInteger _isF;
 }
 @end
 
@@ -47,30 +47,22 @@
 - (void)prepareData
 {
     _dataArray = [NSMutableArray array];
-    
     _path = [NSHomeDirectory() stringByAppendingPathComponent:@"data.plist"];
-    
     NSArray *array = [NSArray arrayWithContentsOfFile:_path];
-    
     if (array.count > 0) {
         [_dataArray addObjectsFromArray:array];
     }else{
         
         for (int i=0; i<2; i++) {
-            
             NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-            
             [dict setObject:[NSString stringWithFormat:@"city%d",i] forKey:kCityName];
             [dict setObject:@"28" forKey:kTemp];
-            
+            [dict setObject:@"0" forKey:kIsF];
             [_dataArray addObject:dict];
-            
         }
         if (_dataArray.count > 0) {
-            
             [_dataArray writeToFile:_path atomically:YES];
         }
-
     }
     
     NSDate *now = [NSDate date];
@@ -82,9 +74,9 @@
 
 - (void)uiInit
 {
+    _isF = [_dataArray[0][kIsF] intValue];
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.view.backgroundColor = [UIColor whiteColor];
-    
     [self createTabView];
     [self createFootBtn];
 }
@@ -100,13 +92,13 @@
 
 - (void)createFootBtn
 {
+    //温度改变按钮
     _leftBtn = [MyUtil createBtnFrame:CGRectMake(20, 0, 100, 50) title:@"°C/°F" bgImage:nil image:nil target:self action:@selector(changeTemp:)];
     _leftBtn.contentHorizontalAlignment= UIControlContentHorizontalAlignmentLeft;
-    
+    //搜索按钮
     _rightBtn = [UIButton buttonWithType:UIButtonTypeContactAdd];
     _rightBtn.frame = CGRectMake(kScreenWidth-70, 0, 70, 50);
     [_rightBtn addTarget:self action:@selector(addCity:) forControlEvents:UIControlEventTouchUpInside];
-    
 }
 
 #pragma mark - uitableViewDelegate
@@ -125,7 +117,6 @@
         {
             cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:footCell];
         }
-        
         [cell.contentView addSubview:_leftBtn];
         [cell.contentView addSubview:_rightBtn];
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
@@ -141,7 +132,6 @@
         }
         
         NSDictionary *dict = _dataArray[indexPath.row];
-        
         cell.cityName.text = dict[kCityName];
         cell.tempLabel.text = [NSString stringWithFormat:@"%@°",dict[kTemp]];
         if ([_dateComponent hour] < 12)
@@ -163,8 +153,8 @@
     {
         if (self.delegate)
         {
-            NSDictionary *dic = _dataArray[indexPath.row];
-            [self.delegate didSelectedWithCityInfo:dic];
+//            NSDictionary *dic = _dataArray[indexPath.row];
+            [self.delegate didSelectedWithCityInfo:indexPath.row data:_dataArray];
         }
         [self dismissViewControllerAnimated:NO completion:^{
             
@@ -179,7 +169,6 @@
     {
         return 50;
     }
-    
     return kcellHeight;
 }
 
@@ -210,7 +199,6 @@
 
 -(UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
     return UITableViewCellEditingStyleDelete;
 }
 
@@ -218,7 +206,6 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
     NSString *path = [NSHomeDirectory() stringByAppendingPathComponent:@"data.plist"];
     NSArray *array = [NSArray arrayWithContentsOfFile:path];
     NSLog(@"%@",path);
@@ -226,7 +213,6 @@
     if (array.count > 0) {
         [_dataArray removeAllObjects];
         [_dataArray addObjectsFromArray:array];
-        
         [_cityTab reloadData];
     }
     
@@ -237,46 +223,50 @@
 {
     if (!_isF)
     {
-        for (NSMutableDictionary *dic in _dataArray)
-        {
+        for (NSMutableDictionary *dic in _dataArray){
             NSString *temp = dic[kTemp];
             int fTemp = temp.intValue*2+32;
             NSString *f = [NSString stringWithFormat:@"%d",fTemp];
             [dic setObject:f forKey:kTemp];
+            [dic setObject:@"1" forKey:kIsF];
+            [_dataArray writeToFile:_path atomically:YES];
         }
         [_cityTab reloadData];
         _isF = YES;
         [btn setTitle:@"°F" forState:UIControlStateNormal];
     }
-    else
-    {
-        for (NSMutableDictionary *dic in _dataArray)
-        {
+    else{
+        for (NSMutableDictionary *dic in _dataArray){
             NSString *temp = dic[kTemp];
             int cTemp = ((temp.intValue - 32)/2);
             NSString *c = [NSString stringWithFormat:@"%d",cTemp];
             [dic setObject:c forKey:kTemp];
+            [dic setObject:@"0" forKey:kIsF];
+            [_dataArray writeToFile:_path atomically:YES];
         }
         [_cityTab reloadData];
         _isF = NO;
         [btn setTitle:@"°C" forState:UIControlStateNormal];
     }
-    
-
 }
 
 - (void)addCity:(UIButton *)btn
 {
      NSMutableDictionary *dic = [NSMutableDictionary dictionary];
     [dic setValue:@"SH" forKey:kCityName];
-    [dic setValue:@"35" forKey:kTemp];
+    if (!_isF) {
+        [dic setValue:@"35" forKey:kTemp];
+    }
+    else {
+        [dic setValue:@"102" forKey:kTemp];
+    }
+    
     [_dataArray addObject:dic];
     [_dataArray writeToFile:_path atomically:YES];
     SearchCityController *searchCtrl = [[SearchCityController alloc]init];
     [self presentViewController:searchCtrl animated:YES completion:^{
         
     }];
-    
 }
 
 @end

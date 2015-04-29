@@ -10,7 +10,7 @@
 
 @protocol CityViewControllerDelegate <NSObject>
 
-- (void)didSelectedWithCityInfo:(NSDictionary *)cityDic;
+- (void)didSelectedWithCityInfo:(NSInteger )index data:(NSMutableArray *)dataArray;
 
 @end
 

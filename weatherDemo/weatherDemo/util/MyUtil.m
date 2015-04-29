@@ -14,21 +14,17 @@
 {
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame = frame;
-    if (title)
-    {
+    if (title){
        [btn setTitle:title forState:UIControlStateNormal];
         [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     }
-    if (bgImageName)
-    {
+    if (bgImageName){
         [btn setBackgroundImage:[UIImage imageNamed:bgImageName] forState:UIControlStateNormal];
     }
-    if (imageName)
-    {
+    if (imageName){
         [btn setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
     }
-    if (target && action)
-    {
+    if (target && action){
         [btn addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
     }
     
@@ -38,17 +34,14 @@
 +(UILabel *)createLabelFrame:(CGRect)frame text:(NSString *)text font:(UIFont *)font textAlignment:(NSTextAlignment)textAlignment
 {
     UILabel *label = [[UILabel alloc]initWithFrame:frame];
-    if (text)
-    {
+    if (text){
         label.text = text;
     }
-    if (font)
-    {
+    if (font){
         label.font = font;
     }
     
-    if (textAlignment)
-    {
+    if (textAlignment){
         label.textAlignment = textAlignment;
     }
     

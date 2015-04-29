@@ -11,13 +11,11 @@
 @implementation CityInfo
 
 - (void)awakeFromNib {
-    // Initialization code
+    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
 }
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -38,7 +36,6 @@
         [self.contentView addSubview:_cityName];
         [self.contentView addSubview:_tempLabel];
     }
-    
     return self;
 }
 
