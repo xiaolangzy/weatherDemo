@@ -25,6 +25,7 @@
 		D21085281AF0B5DC00F49D57 /* TodayInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D21085271AF0B5DC00F49D57 /* TodayInfoCell.m */; };
 		D210852B1AF0BAA600F49D57 /* TodayDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D210852A1AF0BAA600F49D57 /* TodayDetailCell.m */; };
 		D210852E1AF0CCB900F49D57 /* MainView.m in Sources */ = {isa = PBXBuildFile; fileRef = D210852D1AF0CCB900F49D57 /* MainView.m */; };
+		D21085311AF211E500F49D57 /* DownloadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D21085301AF211E500F49D57 /* DownloadManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +75,8 @@
 		D210852A1AF0BAA600F49D57 /* TodayDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TodayDetailCell.m; sourceTree = "<group>"; };
 		D210852C1AF0CCB900F49D57 /* MainView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainView.h; sourceTree = "<group>"; };
 		D210852D1AF0CCB900F49D57 /* MainView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainView.m; sourceTree = "<group>"; };
+		D210852F1AF211E500F49D57 /* DownloadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownloadManager.h; sourceTree = "<group>"; };
+		D21085301AF211E500F49D57 /* DownloadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DownloadManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -216,6 +219,8 @@
 			children = (
 				D21084D91AEE3B7800F49D57 /* MyUtil.h */,
 				D21084DA1AEE3B7800F49D57 /* MyUtil.m */,
+				D210852F1AF211E500F49D57 /* DownloadManager.h */,
+				D21085301AF211E500F49D57 /* DownloadManager.m */,
 			);
 			name = util;
 			path = weatherDemo/util;
@@ -329,6 +334,7 @@
 				D21084B31AEE2D8300F49D57 /* ViewController.m in Sources */,
 				D21084DE1AEE50FC00F49D57 /* CityViewController.m in Sources */,
 				D21085281AF0B5DC00F49D57 /* TodayInfoCell.m in Sources */,
+				D21085311AF211E500F49D57 /* DownloadManager.m in Sources */,
 				D21084B01AEE2D8300F49D57 /* AppDelegate.m in Sources */,
 				D210852E1AF0CCB900F49D57 /* MainView.m in Sources */,
 				D21084AD1AEE2D8300F49D57 /* main.m in Sources */,

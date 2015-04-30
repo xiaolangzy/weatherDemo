@@ -15,9 +15,22 @@
 #define kCityName (@"cityName")
 #define kTemp   (@"temp")
 #define kIsF  (@"isF")
+//维度
+#define kLat (@"latitude")
+//经度
+#define kLon (@"longitude")
+//天气Key
+#define kWeatherKey (@"033790acc79a4abc994bc91aefa5fe72")
+//城市天气
+#define kWeatherUrl (@"http://apis.haoservice.com/weather?cityname=%@&key=%@")
+//本地天气
+#define kLocationWeatherUrl (@"http://apis.haoservice.com/weather/geo?lon=%@&lat=%@&key=%@")
+//天气图标
+#define kWeatherImage (@"http://apis.haoservice.com/weather/uni?key=%@")
 
 #import <UIKit/UIKit.h>
 #import "MyUtil.h"
-
+//下载管理
+#import "DownloadManager.h"
 
 #endif

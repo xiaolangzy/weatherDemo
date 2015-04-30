@@ -42,7 +42,7 @@
         //星期几
        WeekView *view = [self.contentView.subviews objectAtIndex:i];
         long week = [dateComponent weekday];
-        (week + i+1 > 6)?(week + i+1 > 14)?(view.weekLabel.text = [weekArray objectAtIndex:week + i - 13]):(view.weekLabel.text = [weekArray objectAtIndex:week + i - 6]):(view.weekLabel.text = [weekArray objectAtIndex:week + i+1]);
+        ((week + i + 1) > 6)?((week + i + 1) > 13)?(view.weekLabel.text = [weekArray objectAtIndex:week + i - 13]):(view.weekLabel.text = [weekArray objectAtIndex:week + i - 6]):(view.weekLabel.text = [weekArray objectAtIndex:week + i + 1]);
         //最低最高温
         view.weekHighLow.text = [NSString stringWithFormat:@"%d  %d",i+20,i+25];
     }

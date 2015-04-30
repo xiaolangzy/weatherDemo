@@ -13,8 +13,9 @@
 @interface CityViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
     UITableView *_cityTab;
-    //数据源
-    NSMutableArray *_dataArray;
+    //城市名
+    NSMutableArray *_cityArray;
+    NSString *_cityNamePath;
     //删除
     NSMutableArray *_deleteArray;
     //温度按钮
@@ -46,25 +47,26 @@
 
 - (void)prepareData
 {
-    _dataArray = [NSMutableArray array];
-    _path = [NSHomeDirectory() stringByAppendingPathComponent:@"data.plist"];
-    NSArray *array = [NSArray arrayWithContentsOfFile:_path];
-    if (array.count > 0) {
-        [_dataArray addObjectsFromArray:array];
-    }else{
-        
-        for (int i=0; i<2; i++) {
-            NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-            [dict setObject:[NSString stringWithFormat:@"city%d",i] forKey:kCityName];
-            [dict setObject:@"28" forKey:kTemp];
-            [dict setObject:@"0" forKey:kIsF];
-            [_dataArray addObject:dict];
-        }
-        if (_dataArray.count > 0) {
-            [_dataArray writeToFile:_path atomically:YES];
-        }
-    }
-    
+//    _dataArray = [NSMutableArray array];
+//    _path = [NSHomeDirectory() stringByAppendingPathComponent:@"data.plist"];
+//    NSArray *array = [NSArray arrayWithContentsOfFile:_path];
+//    if (array.count > 0) {
+//        [_dataArray addObjectsFromArray:array];
+//    }else{
+//        
+//        for (int i=0; i<2; i++) {
+//            NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+//            [dict setObject:[NSString stringWithFormat:@"city%d",i] forKey:kCityName];
+//            [dict setObject:@"28" forKey:kTemp];
+//            [dict setObject:@"0" forKey:kIsF];
+//            [_dataArray addObject:dict];
+//        }
+//        if (_dataArray.count > 0) {
+//            [_dataArray writeToFile:_path atomically:YES];
+//        }
+//    }
+    _cityNamePath = [NSHomeDirectory() stringByAppendingPathComponent:@"cityName.plist"];
+    _cityArray = [NSMutableArray arrayWithContentsOfFile:_cityNamePath];
     NSDate *now = [NSDate date];
     NSCalendar *calendar = [NSCalendar currentCalendar];
     NSUInteger unitFlags = NSCalendarUnitHour | NSCalendarUnitMinute;
@@ -74,7 +76,7 @@
 
 - (void)uiInit
 {
-    _isF = [_dataArray[0][kIsF] intValue];
+    //_isF = [_dataArray[0][kIsF] intValue];
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.view.backgroundColor = [UIColor whiteColor];
     [self createTabView];
@@ -104,12 +106,12 @@
 #pragma mark - uitableViewDelegate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _dataArray.count+1;
+    return _cityArray.count+1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == _dataArray.count )
+    if (indexPath.row == _cityArray.count )
     {
         static NSString *footCell = @"footId";
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:footCell];
@@ -131,9 +133,11 @@
             cell = [[CityInfo alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellId];
         }
         
-        NSDictionary *dict = _dataArray[indexPath.row];
-        cell.cityName.text = dict[kCityName];
-        cell.tempLabel.text = [NSString stringWithFormat:@"%@°",dict[kTemp]];
+        NSArray *array = _dataArray[indexPath.row];
+        NSDictionary *cityNameDic = array[1];
+        NSDictionary *cityTemper = array[0];
+        cell.cityName.text = cityNameDic[@"city"];
+        cell.tempLabel.text = [NSString stringWithFormat:@"%@°",cityTemper[@"temp"]];
         if ([_dateComponent hour] < 12)
         {
             cell.timeLabel.text = [NSString stringWithFormat:@"上午%ld:%ld",[_dateComponent hour],[_dateComponent minute]];
@@ -149,7 +153,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row != _dataArray.count)
+    if (indexPath.row != _cityArray.count)
     {
         if (self.delegate)
         {
@@ -165,7 +169,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == _dataArray.count)
+    if (indexPath.row == _cityArray.count)
     {
         return 50;
     }
@@ -175,7 +179,7 @@
 // 删除
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == _dataArray.count || indexPath.row == 0)
+    if (indexPath.row == _cityArray.count || indexPath.row == 0)
     {
         return NO;
     }
@@ -186,9 +190,9 @@
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
     
-      [_dataArray removeObjectAtIndex:indexPath.row];
+      [_cityArray removeObjectAtIndex:indexPath.row];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-        [_dataArray writeToFile:_path atomically:YES];
+        [_cityArray writeToFile:_path atomically:YES];
     }
 }
 
@@ -203,16 +207,17 @@
 }
 
 #pragma mark --lifeCycle
+//待修改
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    NSString *path = [NSHomeDirectory() stringByAppendingPathComponent:@"data.plist"];
-    NSArray *array = [NSArray arrayWithContentsOfFile:path];
-    NSLog(@"%@",path);
+    _cityNamePath = [NSHomeDirectory() stringByAppendingPathComponent:@"cityName.plist"];
+    NSArray *array = [NSArray arrayWithContentsOfFile:_cityNamePath];
+    NSLog(@"%@",_cityNamePath);
     
     if (array.count > 0) {
-        [_dataArray removeAllObjects];
-        [_dataArray addObjectsFromArray:array];
+        [_cityArray removeAllObjects];
+        [_cityArray addObjectsFromArray:array];
         [_cityTab reloadData];
     }
     
@@ -249,7 +254,7 @@
         [btn setTitle:@"°C" forState:UIControlStateNormal];
     }
 }
-
+//待修改
 - (void)addCity:(UIButton *)btn
 {
      NSMutableDictionary *dic = [NSMutableDictionary dictionary];

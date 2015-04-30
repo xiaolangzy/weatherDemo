@@ -15,7 +15,7 @@
 @end
 
 @interface CityViewController : UIViewController
-
+@property (nonatomic,strong)NSMutableArray *dataArray;
 @property (nonatomic,weak)id<CityViewControllerDelegate>delegate;
 
 @end
