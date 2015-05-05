@@ -13,4 +13,6 @@
 @property (nonatomic,strong)UILabel *cityTemptLabel;
 @property (nonatomic,strong)UILabel *weatherInfoLabel;
 @property (nonatomic,strong)UILabel *lowHighLabel;
+//加载数据
+- (void)configWeatherInfo:(NSDictionary *)dataDic;
 @end

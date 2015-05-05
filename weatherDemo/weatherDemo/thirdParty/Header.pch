@@ -20,7 +20,7 @@
 //经度
 #define kLon (@"longitude")
 //天气Key
-#define kWeatherKey (@"033790acc79a4abc994bc91aefa5fe72")
+#define kWeatherKey (@"b62ee269cafa4f26a796541debad89ba")
 //城市天气
 #define kWeatherUrl (@"http://apis.haoservice.com/weather?cityname=%@&key=%@")
 //本地天气

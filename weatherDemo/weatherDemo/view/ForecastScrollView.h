@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+//各时间温度信息
 @interface ForecastScrollView : UIScrollView
 
 @end

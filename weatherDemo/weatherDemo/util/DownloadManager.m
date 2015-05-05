@@ -20,7 +20,12 @@
 - (void)downloadWithUrlString:(NSString *)urlString
 {
     self.urlString = urlString;
-    NSURL *url = [NSURL URLWithString:urlString];
+    if (self.type == 200) {
+    NSString * urlstr = [urlString stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
+        self.urlString = urlstr;
+    }
+    
+    NSURL *url = [NSURL URLWithString:self.urlString];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     _myConnection = [NSURLConnection connectionWithRequest:request delegate:self];
 }

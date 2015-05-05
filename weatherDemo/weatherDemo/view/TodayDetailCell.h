@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+//今日详情
 @interface TodayDetailCell : UITableViewCell
 //日出
 @property (nonatomic,strong)UILabel *sunriseLabel;
@@ -30,5 +30,5 @@
 //紫外线指数
 @property (nonatomic,strong)UILabel *rayLabel;
 
-- (void)configTodayDetail;
+- (void)configTodayDetail:(NSDictionary *)todayDic andSkDic:(NSDictionary *)skDic;
 @end

@@ -27,6 +27,8 @@
     NSMutableDictionary *_locationDic;
     //城市名本地文件
     NSString *_cityNamePath;
+    //透明度
+    float _touming;
 }
 
 @end
@@ -46,20 +48,24 @@
 #pragma mark --UI
 - (void)uiInit
 {
+    _touming = 1;
     _curIndex = 0;
     _dataArray = [NSMutableArray array];
     _cityArray = [NSMutableArray array];
-    _cityNamePath = [NSHomeDirectory() stringByAppendingPathComponent:@"cityName.plist"];
+    _cityNamePath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/cityName.plist"];
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.view.backgroundColor = [UIColor whiteColor];
-//    NSString *path = [NSHomeDirectory() stringByAppendingPathComponent:@"data.plist"];
     NSArray *array = [NSArray arrayWithContentsOfFile:_cityNamePath];
     if (array.count > 0) {
         [_cityArray removeAllObjects];
         [_cityArray addObjectsFromArray:array];
-        for (NSString *cityName in _cityArray) {
-            [self loadDataWithCity:cityName];
+//        for (NSString *cityName in _cityArray) {
+//            [self loadDataWithCity:cityName];
+//        }
+        for (int i = 0; i < _cityArray.count; i++) {
+            [self downloadFinishWithIndex:i];
         }
+        
     }
     else {
         //开始定位
@@ -67,9 +73,6 @@
         [self createLocation];
         [_manager startUpdatingLocation];
     }
-    
-    [self createScrollView];
-    [self createFootView];
 }
 //加载定位数据
 - (void)loadDataWithLocation
@@ -84,6 +87,7 @@
 - (void)loadDataWithCity:(NSString *)cityName
 {
     NSString *urlString = [NSString stringWithFormat:kWeatherUrl,cityName,kWeatherKey];
+    NSLog(@"url = %@",urlString);
     DownloadManager *downloader = [[DownloadManager alloc] init];
     downloader.delegate = self;
     downloader.type = 200;
@@ -92,23 +96,22 @@
 
 - (void)createScrollView
 {
-    _mainScroll = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 20, kScreenWidth, kScreenHeight-44)];
+    _mainScroll = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 20, kScreenWidth, kScreenHeight-44-20)];
     _mainScroll.showsHorizontalScrollIndicator = NO;
     _mainScroll.showsVerticalScrollIndicator = NO;
     _mainScroll.backgroundColor = [UIColor clearColor];
-    _mainScroll.contentSize = CGSizeMake(_dataArray.count*kScreenWidth, 0);
+    _mainScroll.contentSize = CGSizeMake(_cityArray.count*kScreenWidth, 0);
     _mainScroll.pagingEnabled = YES;
     _mainScroll.delegate = self;
+    _mainScroll.bounces = NO;
     [self.view addSubview:_mainScroll];
     [self createMainView];
 }
-//待处理数据
 - (void)createMainView
 {
     for (int i=0; i<_dataArray.count; i++) {
         MainView *mainView = [[MainView alloc]initWithFrame:CGRectMake(i*kScreenWidth, 0, kScreenWidth, _mainScroll.frame.size.height)];
-        mainView.cityNameLabel.text = _dataArray[i][kCityName];
-        mainView.cityTemptLabel.text = [NSString stringWithFormat:@"%@°",_dataArray[i][kTemp]];
+        [mainView configWeatherInfo:_dataArray[i]];
         [_mainScroll addSubview:mainView];
     }
 }
@@ -121,7 +124,7 @@
     _pageCtrl.currentPage = 0;
     _pageCtrl.numberOfPages = _dataArray.count;
     _pageCtrl.backgroundColor = [UIColor grayColor];
-    _pageCtrl.backgroundColor = [_pageCtrl.backgroundColor colorWithAlphaComponent:0.2];
+    _pageCtrl.backgroundColor = [_pageCtrl.backgroundColor colorWithAlphaComponent:0.1];
     [_footView addSubview:_pageCtrl];
     //天气web
     UIButton *weatherBtn = [MyUtil createBtnFrame:CGRectMake(5, 5, 34, 34) title:@"w" bgImage:nil image:nil target:self action:@selector(gotoWeatherWeb)];
@@ -208,8 +211,17 @@
     _pageCtrl.currentPage = index;
     //修改_curIndex的值
     _curIndex = index;
+    scrollView.alpha = 1;
+    _touming = 1;
 }
 
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    scrollView.alpha = _touming;
+    if (_touming > 0) {
+        _touming -= 0.007;
+    }
+}
 #pragma mark --定位代理
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
@@ -226,8 +238,9 @@
         [_locationDic setObject:[NSString stringWithFormat:@"31.22"] forKey:kLat];
         [_locationDic setObject:[NSString stringWithFormat:@"121.22"] forKey:kLon];
     }
+//    [self loadDataWithLocation]; //真实网络
+      [self downloadFinishWithIndex:0]; //模拟下载
     
-    [self loadDataWithLocation];
 }
 
 #pragma mark --下载代理
@@ -237,20 +250,71 @@
     id result = [NSJSONSerialization JSONObjectWithData:downloader.receiveData options:NSJSONReadingMutableContainers error:nil];
     if ([result isKindOfClass:[NSDictionary class]]) {
         NSDictionary *dict = result;
-        NSArray *array = dict[@"result"];
+        NSDictionary *subDic = dict[@"result"];
         if (downloader.type == 100) {
-            NSDictionary *dic = array[1];
-            NSString *cityName = dic[@"city"];
-            [_cityArray replaceObjectAtIndex:0 withObject:cityName];
-            [_cityArray writeToFile:_cityNamePath atomically:YES];
+            NSDictionary *today = subDic[@"today"];
+            NSString *cityName = today[@"city"];
+            if (_cityArray.count > 0) {
+                 [_cityArray replaceObjectAtIndex:0 withObject:cityName];
+            }
+            else {
+                [_cityArray addObject:cityName];
+            }
+           [_cityArray writeToFile:_cityNamePath atomically:YES];
         }
-        [_dataArray addObject:array];
+        [_dataArray addObject:subDic];
     }
+    
+    for (UIView *view in self.view.subviews) {
+        [view removeFromSuperview];
+    }
+
+    [self createScrollView];
+    [self createFootView];
 }
 
 - (void)downloadError:(NSError *)error
 {
     NSLog(@"%@",error);
+}
+
+//模拟下载
+- (void)downloadFinishWithIndex:(NSInteger)index
+{
+    NSString *filePath = [NSString string];
+    
+    switch (index%3) {
+        case 0:
+            filePath = [[NSBundle mainBundle] pathForResource:@"weather" ofType:@"json"];
+            break;
+        case 1:
+            filePath = [[NSBundle mainBundle] pathForResource:@"beijingWeather" ofType:@"json"];
+            break;
+        case 2:
+            filePath = [[NSBundle mainBundle] pathForResource:@"heilongjiangWeather" ofType:@"json"];
+            break;
+        default:
+            break;
+    }
+    NSData *data = [NSData dataWithContentsOfFile:filePath];
+   id result = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+    if ([result isKindOfClass:[NSDictionary class]]) {
+        NSDictionary *dict = result;
+        NSDictionary *subDic = dict[@"result"];
+        if (_cityArray.count > 0) {
+            [_cityArray replaceObjectAtIndex:0 withObject:@"上海"];
+        }
+        else {
+            [_cityArray addObject:@"上海"];
+        }
+        [_cityArray writeToFile:_cityNamePath atomically:YES];
+        [_dataArray addObject:subDic];
+    }
+    for (UIView *view in self.view.subviews) {
+        [view removeFromSuperview];
+    }
+    [self createScrollView];
+    [self createFootView];
 }
 @end
 

@@ -7,16 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
-
+//未来信息
 @interface WeekCell : UITableViewCell
-- (void)configWeekCellWith:(NSArray *)weekArray week:(NSDateComponents *)dateComponent;
+- (void)configWeekCellWith:(NSArray *)weekArray week:(NSDateComponents *)dateComponent withFutureInfo:(NSArray *)futureInfo;
 @end
 
 @interface WeekView : UIView
 //星期几
 @property (nonatomic,strong)UILabel *weekLabel;
 //图片
-@property (nonatomic,strong)UIImageView *weekImage;
+@property (nonatomic,strong)UIImageView *faImage;
+@property (nonatomic,strong)UIImageView *fbImage;
 //最低最高温
 @property (nonatomic,strong)UILabel *weekHighLow;
 @end

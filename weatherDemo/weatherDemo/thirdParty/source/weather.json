@@ -1,0 +1,87 @@
+{
+  "error_code" : 0,
+  "reason" : "成功",
+  "result" : {
+    "future" : [
+      {
+        "date" : "20150505",
+        "fa" : "00",
+        "fb" : "07",
+        "temperature" : "17~23",
+        "weather" : "晴",
+        "week" : "星期二",
+        "wind" : "东南风 微风"
+      },
+      {
+        "date" : "20150506",
+        "fa" : "08",
+        "fb" : "07",
+        "temperature" : "16~20",
+        "weather" : "中雨",
+        "week" : "星期三",
+        "wind" : "东南风 微风"
+      },
+      {
+        "date" : "20150507",
+        "fa" : "01",
+        "fb" : "01",
+        "temperature" : "17~23",
+        "weather" : "多云",
+        "week" : "星期四",
+        "wind" : "北风 微风"
+      },
+      {
+        "date" : "20150508",
+        "fa" : "01",
+        "fb" : "07",
+        "temperature" : "17~24",
+        "weather" : "多云",
+        "week" : "星期五",
+        "wind" : "东南风 微风"
+      },
+      {
+        "date" : "20150509",
+        "fa" : "07",
+        "fb" : "02",
+        "temperature" : "16~22",
+        "weather" : "小雨",
+        "week" : "星期六",
+        "wind" : "东风 3-4 级"
+      },
+      {
+        "date" : "20150510",
+        "fa" : "02",
+        "fb" : "02",
+        "temperature" : "16~24",
+        "weather" : "阴",
+        "week" : "星期日",
+        "wind" : "东北风 微风"
+      }
+    ],
+    "sk" : {
+      "humidity" : "62",
+      "temp" : "22",
+      "time" : "10:16",
+      "wind_direction" : "北风",
+      "wind_strength" : "1级"
+    },
+    "today" : {
+      "city" : "上海",
+      "comfort_index" : "--",
+      "date_y" : "2015年05月04日",
+      "dressing_advice" : "建议着长袖T恤、衬衫加单裤等服装。年老体弱者宜着针织长袖衬衫、马甲和长裤。",
+      "dressing_index" : "舒适",
+      "drying_index" : "--",
+      "exercise_index" : "较适宜",
+      "fa" : "02",
+      "fb" : "01",
+      "temperature" : "14~24",
+      "travel_index" : "较适宜",
+      "uv_index" : "最弱",
+      "wash_index" : "较适宜",
+      "weather" : "阴",
+      "week" : "星期一",
+      "wind" : "东北风 微风"
+    }
+  }
+}

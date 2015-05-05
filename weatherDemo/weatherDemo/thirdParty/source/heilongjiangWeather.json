@@ -1,0 +1,87 @@
+{
+  "error_code" : 0,
+  "reason" : "成功",
+  "result" : {
+    "future" : [
+      {
+        "date" : "20150506",
+        "fa" : "01",
+        "fb" : "00",
+        "temperature" : "1~14",
+        "weather" : "多云",
+        "week" : "星期三",
+        "wind" : "西北风 3-4 级"
+      },
+      {
+        "date" : "20150507",
+        "fa" : "00",
+        "fb" : "01",
+        "temperature" : "3~11",
+        "weather" : "晴",
+        "week" : "星期四",
+        "wind" : "东北风 4-5 级"
+      },
+      {
+        "date" : "20150508",
+        "fa" : "03",
+        "fb" : "00",
+        "temperature" : "2~13",
+        "weather" : "阵雨",
+        "week" : "星期五",
+        "wind" : "北风 3-4 级"
+      },
+      {
+        "date" : "20150509",
+        "fa" : "00",
+        "fb" : "00",
+        "temperature" : "6~16",
+        "weather" : "晴",
+        "week" : "星期六",
+        "wind" : "东北风 微风"
+      },
+      {
+        "date" : "20150510",
+        "fa" : "03",
+        "fb" : "00",
+        "temperature" : "10~14",
+        "weather" : "阵雨",
+        "week" : "星期日",
+        "wind" : "东北风 3-4 级"
+      },
+      {
+        "date" : "20150511",
+        "fa" : "03",
+        "fb" : "03",
+        "temperature" : "10~14",
+        "weather" : "阵雨",
+        "week" : "星期一",
+        "wind" : "东北风 3-4 级"
+      }
+    ],
+    "sk" : {
+      "humidity" : "77",
+      "temp" : "7",
+      "time" : "13:44",
+      "wind_direction" : "北风",
+      "wind_strength" : "3级"
+    },
+    "today" : {
+      "city" : "龙江",
+      "comfort_index" : "--",
+      "date_y" : "2015年05月05日",
+      "dressing_advice" : "建议着厚外套加毛衣等服装。年老体弱者宜着大衣、呢外套加羊毛衫。",
+      "dressing_index" : "较冷",
+      "drying_index" : "--",
+      "exercise_index" : "较不宜",
+      "fa" : "03",
+      "fb" : "03",
+      "temperature" : "5~11",
+      "travel_index" : "较不宜",
+      "uv_index" : "最弱",
+      "wash_index" : "不宜",
+      "weather" : "阵雨",
+      "week" : "星期二",
+      "wind" : "西北风 4-5 级"
+    }
+  }
+}

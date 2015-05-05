@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "CityInfoModel.h"
-
+//城市简略信息
 @interface CityInfo : UITableViewCell
 
 @property (nonatomic,strong)UILabel *timeLabel;

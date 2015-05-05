@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
+//今日温馨提示
 @interface TodayInfoCell : UITableViewCell
 @property (nonatomic,strong)UILabel *infoLabel;
-- (void)configTodayCell;
+- (void)configTodayCell:(NSString *)infoString;
 @end

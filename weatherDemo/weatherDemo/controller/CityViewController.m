@@ -20,6 +20,8 @@
     NSMutableArray *_deleteArray;
     //温度按钮
     UIButton *_leftBtn;
+    //温度信息
+    NSMutableArray *_tempArray;
     //添加按钮
     UIButton *_rightBtn;
     //当前时间
@@ -42,41 +44,40 @@
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+}
+
+- (void)setDataArray:(NSMutableArray *)dataArray
+{
+    if (_dataArray != dataArray) {
+        _dataArray = dataArray;
+    }
 }
 
 - (void)prepareData
 {
-//    _dataArray = [NSMutableArray array];
-//    _path = [NSHomeDirectory() stringByAppendingPathComponent:@"data.plist"];
-//    NSArray *array = [NSArray arrayWithContentsOfFile:_path];
-//    if (array.count > 0) {
-//        [_dataArray addObjectsFromArray:array];
-//    }else{
-//        
-//        for (int i=0; i<2; i++) {
-//            NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-//            [dict setObject:[NSString stringWithFormat:@"city%d",i] forKey:kCityName];
-//            [dict setObject:@"28" forKey:kTemp];
-//            [dict setObject:@"0" forKey:kIsF];
-//            [_dataArray addObject:dict];
-//        }
-//        if (_dataArray.count > 0) {
-//            [_dataArray writeToFile:_path atomically:YES];
-//        }
-//    }
-    _cityNamePath = [NSHomeDirectory() stringByAppendingPathComponent:@"cityName.plist"];
+    _cityNamePath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/cityName.plist"];
     _cityArray = [NSMutableArray arrayWithContentsOfFile:_cityNamePath];
     NSDate *now = [NSDate date];
     NSCalendar *calendar = [NSCalendar currentCalendar];
     NSUInteger unitFlags = NSCalendarUnitHour | NSCalendarUnitMinute;
     _dateComponent = [calendar components:unitFlags fromDate:now];
-    
+    //当前温度设置
+    _tempArray = [NSMutableArray array];
+    for (int i=0;i<_dataArray.count;i++) {
+        NSDictionary *subDic = _dataArray[i];
+        NSDictionary *skDic = subDic[@"sk"];
+        NSString *tempStr = skDic[@"temp"];
+        [_tempArray addObject:tempStr];
+    }
 }
 
 - (void)uiInit
 {
     //_isF = [_dataArray[0][kIsF] intValue];
+    UIImageView *weatherBG = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"weatherBG.jpeg"]];
+    weatherBG.frame = self.view.bounds;
+    weatherBG.alpha = 0.5;
+    [self.view addSubview:weatherBG];
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.view.backgroundColor = [UIColor whiteColor];
     [self createTabView];
@@ -85,10 +86,11 @@
 
 - (void)createTabView
 {
-    _cityTab = [[UITableView alloc]initWithFrame:CGRectMake(0, 10, kScreenWidth, kScreenHeight) style:UITableViewStylePlain];
+    _cityTab = [[UITableView alloc]initWithFrame:CGRectMake(0, 20, kScreenWidth, kScreenHeight) style:UITableViewStylePlain];
     _cityTab.delegate = self;
     _cityTab.dataSource = self;
-    //_cityTab.separatorStyle = UITableViewCellSeparatorStyleNone;
+    _cityTab.separatorStyle = UITableViewCellSeparatorStyleNone;
+    _cityTab.backgroundColor = [UIColor clearColor];
     [self.view addSubview:_cityTab];
 }
 
@@ -111,52 +113,44 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == _cityArray.count )
-    {
+    if (indexPath.row == _cityArray.count ) {
         static NSString *footCell = @"footId";
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:footCell];
-        if (!cell)
-        {
+        if (!cell) {
             cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:footCell];
         }
         [cell.contentView addSubview:_leftBtn];
         [cell.contentView addSubview:_rightBtn];
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+        cell.backgroundColor = [UIColor clearColor];
         return cell;
     }
-    else
-    {
+    else {
         static NSString *cellId = @"cellId";
         CityInfo *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
-        if (!cell)
-        {
+        if (!cell) {
             cell = [[CityInfo alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellId];
         }
-        
-        NSArray *array = _dataArray[indexPath.row];
-        NSDictionary *cityNameDic = array[1];
-        NSDictionary *cityTemper = array[0];
-        cell.cityName.text = cityNameDic[@"city"];
-        cell.tempLabel.text = [NSString stringWithFormat:@"%@°",cityTemper[@"temp"]];
-        if ([_dateComponent hour] < 12)
-        {
+        if (_dataArray.count == _cityArray.count) {
+            cell.tempLabel.text = [NSString stringWithFormat:@"%@°",_tempArray[indexPath.row]];
+        }
+        if ([_dateComponent hour] < 12) {
             cell.timeLabel.text = [NSString stringWithFormat:@"上午%ld:%ld",[_dateComponent hour],[_dateComponent minute]];
         }
-        else
-        {
+        else {
             cell.timeLabel.text = [NSString stringWithFormat:@"下午%ld:%ld",[_dateComponent hour]-12,[_dateComponent minute]];
         }
+        cell.cityName.text = _cityArray[indexPath.row];
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+        cell.backgroundColor = [UIColor clearColor];
         return cell;
     }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row != _cityArray.count)
-    {
-        if (self.delegate)
-        {
+    if (indexPath.row != _cityArray.count) {
+        if (self.delegate) {
 //            NSDictionary *dic = _dataArray[indexPath.row];
             [self.delegate didSelectedWithCityInfo:indexPath.row data:_dataArray];
         }
@@ -164,23 +158,19 @@
             
         }];
     }
-    
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == _cityArray.count)
-    {
+    if (indexPath.row == _cityArray.count) {
         return 50;
     }
     return kcellHeight;
 }
-
 // 删除
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == _cityArray.count || indexPath.row == 0)
-    {
+    if (indexPath.row == _cityArray.count || indexPath.row == 0) {
         return NO;
     }
     return YES;
@@ -189,10 +179,9 @@
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-    
-      [_cityArray removeObjectAtIndex:indexPath.row];
+        [_cityArray removeObjectAtIndex:indexPath.row];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-        [_cityArray writeToFile:_path atomically:YES];
+        [_cityArray writeToFile:_cityNamePath atomically:YES];
     }
 }
 
@@ -207,67 +196,46 @@
 }
 
 #pragma mark --lifeCycle
-//待修改
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    _cityNamePath = [NSHomeDirectory() stringByAppendingPathComponent:@"cityName.plist"];
+    _cityNamePath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/cityName.plist"];
     NSArray *array = [NSArray arrayWithContentsOfFile:_cityNamePath];
     NSLog(@"%@",_cityNamePath);
-    
     if (array.count > 0) {
         [_cityArray removeAllObjects];
         [_cityArray addObjectsFromArray:array];
         [_cityTab reloadData];
     }
-    
 }
 
 #pragma mark --btnAction
 - (void)changeTemp:(UIButton *)btn
 {
-    if (!_isF)
-    {
-        for (NSMutableDictionary *dic in _dataArray){
-            NSString *temp = dic[kTemp];
-            int fTemp = temp.intValue*2+32;
+    if (!_isF) {
+        for (int i=0;i<_tempArray.count;i++) {
+            int fTemp = [_tempArray[i] intValue]*2+32;
             NSString *f = [NSString stringWithFormat:@"%d",fTemp];
-            [dic setObject:f forKey:kTemp];
-            [dic setObject:@"1" forKey:kIsF];
-            [_dataArray writeToFile:_path atomically:YES];
+            [_tempArray replaceObjectAtIndex:i withObject:f];
         }
         [_cityTab reloadData];
         _isF = YES;
         [btn setTitle:@"°F" forState:UIControlStateNormal];
     }
     else{
-        for (NSMutableDictionary *dic in _dataArray){
-            NSString *temp = dic[kTemp];
-            int cTemp = ((temp.intValue - 32)/2);
+        for (int i=0;i<_tempArray.count;i++) {
+            int cTemp = (([_tempArray[i]intValue] - 32)/2);
             NSString *c = [NSString stringWithFormat:@"%d",cTemp];
-            [dic setObject:c forKey:kTemp];
-            [dic setObject:@"0" forKey:kIsF];
-            [_dataArray writeToFile:_path atomically:YES];
+            [_tempArray replaceObjectAtIndex:i withObject:c];
         }
         [_cityTab reloadData];
         _isF = NO;
         [btn setTitle:@"°C" forState:UIControlStateNormal];
     }
 }
-//待修改
+
 - (void)addCity:(UIButton *)btn
 {
-     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-    [dic setValue:@"SH" forKey:kCityName];
-    if (!_isF) {
-        [dic setValue:@"35" forKey:kTemp];
-    }
-    else {
-        [dic setValue:@"102" forKey:kTemp];
-    }
-    
-    [_dataArray addObject:dic];
-    [_dataArray writeToFile:_path atomically:YES];
     SearchCityController *searchCtrl = [[SearchCityController alloc]init];
     [self presentViewController:searchCtrl animated:YES completion:^{
         

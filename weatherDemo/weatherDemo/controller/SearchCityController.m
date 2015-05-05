@@ -25,11 +25,14 @@
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (void)uiInit
 {
+    UIImageView *weatherBG = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"weatherBG.jpeg"]];
+    weatherBG.frame = self.view.bounds;
+    weatherBG.alpha = 0.5;
+    [self.view addSubview:weatherBG];
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.view.backgroundColor = [UIColor whiteColor];
     UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 20, kScreenWidth, 20)];
@@ -57,6 +60,18 @@
    [self dismissViewControllerAnimated:YES completion:^{
        
    }];
+}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    NSString *path = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/cityName.plist"];
+    NSMutableArray *array = [NSMutableArray arrayWithContentsOfFile:path];
+    [array addObject:searchBar.text];
+    [array writeToFile:path atomically:YES];
+    [self dismissViewControllerAnimated:YES completion:^{
+        
+    }];
+
 }
 
 @end

@@ -11,13 +11,11 @@
 @implementation WeekCell
 
 - (void)awakeFromNib {
-    // Initialization code
+ 
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
 }
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -30,13 +28,13 @@
 
 - (void)createWeekView
 {
-    for (int i=0; i<9; i++) {
-        WeekView *weekView = [[WeekView alloc]initWithFrame:CGRectMake(0, i*20, kScreenWidth, 20)];
+    for (int i=0; i<6; i++) {
+        WeekView *weekView = [[WeekView alloc]initWithFrame:CGRectMake(0, i*25, kScreenWidth, 20)];
         [self.contentView addSubview:weekView];
     }
 }
 
-- (void)configWeekCellWith:(NSArray *)weekArray week:(NSDateComponents *)dateComponent
+- (void)configWeekCellWith:(NSArray *)weekArray week:(NSDateComponents *)dateComponent withFutureInfo:(NSArray *)futureInfo
 {
     for (int i = 0; i<[self.contentView.subviews count]; i++) {
         //星期几
@@ -44,9 +42,17 @@
         long week = [dateComponent weekday];
         ((week + i + 1) > 6)?((week + i + 1) > 13)?(view.weekLabel.text = [weekArray objectAtIndex:week + i - 13]):(view.weekLabel.text = [weekArray objectAtIndex:week + i - 6]):(view.weekLabel.text = [weekArray objectAtIndex:week + i + 1]);
         //最低最高温
-        view.weekHighLow.text = [NSString stringWithFormat:@"%d  %d",i+20,i+25];
+        NSString *temperInfo = futureInfo[i][@"temperature"];
+        view.weekHighLow.text = temperInfo;
+        if (![futureInfo[i][@"fa"] isEqualToString:futureInfo[i][@"fb"]]) {
+            view.faImage.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@",futureInfo[i][@"fa"]]];
+            view.fbImage.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@",futureInfo[i][@"fb"]]];
+        }
+        else {
+            view.faImage.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@",futureInfo[i][@"fa"]]];
+            view.faImage.frame = CGRectMake(kScreenWidth/2-10, 0, 20, 20);
+        }
     }
-
 }
 
 @end
@@ -58,8 +64,10 @@
     if (self = [super initWithFrame:frame]) {
         _weekLabel = [MyUtil createLabelFrame:CGRectMake(0, 0, kScreenWidth/5, 20) text:nil font:[UIFont systemFontOfSize:17] textAlignment:NSTextAlignmentCenter];
         [self addSubview:_weekLabel];
-        _weekImage = [[UIImageView alloc]initWithFrame:CGRectMake(kScreenWidth/2-20, 0, 20, 20)];
-        [self addSubview:_weekImage];
+        _faImage = [[UIImageView alloc]initWithFrame:CGRectMake(kScreenWidth/2-40, 0, 20, 20)];
+        [self addSubview:_faImage];
+        _fbImage = [[UIImageView alloc]initWithFrame:CGRectMake(_faImage.frame.origin.x + 60, 0, 20, 20)];
+        [self addSubview:_fbImage];
         _weekHighLow = [MyUtil createLabelFrame:CGRectMake(kScreenWidth-100, 0, 100, 20) text:nil font:[UIFont systemFontOfSize:17] textAlignment:NSTextAlignmentCenter];
         [self addSubview:_weekHighLow];
     }

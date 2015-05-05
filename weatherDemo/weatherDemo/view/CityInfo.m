@@ -20,8 +20,7 @@
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
-    if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier])
-    {
+    if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         //日期
         _timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, 20, 100, 10)];
         _timeLabel.font = [UIFont systemFontOfSize:12];
