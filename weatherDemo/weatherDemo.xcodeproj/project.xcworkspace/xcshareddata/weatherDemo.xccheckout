@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>8E37B9E6-8557-42E2-A71E-3054539BC429</string>
+	<key>IDESourceControlProjectName</key>
+	<string>project</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>C3D9B1E2BEFFCC7C3A1168392535332E1CAF32FB</key>
+		<string>github.com:xiaolangzy/weatherDemo.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>weatherDemo/weatherDemo.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>C3D9B1E2BEFFCC7C3A1168392535332E1CAF32FB</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>github.com:xiaolangzy/weatherDemo.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>C3D9B1E2BEFFCC7C3A1168392535332E1CAF32FB</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>C3D9B1E2BEFFCC7C3A1168392535332E1CAF32FB</string>
+			<key>IDESourceControlWCCName</key>
+			<string>weatherDemo</string>
+		</dict>
+	</array>
+</dict>
+</plist>
